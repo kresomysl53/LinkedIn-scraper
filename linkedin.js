@@ -1,31 +1,27 @@
-const { chromium } = require('playwright');
-const { humanType, advancedHumanType, simulateTypo, humanClick, humanScroll, randomHumanAct } = require('./USER_INTERACTIONS.js');
-
+const { User }      = require('./lib/USER_INTERACTIONS.js');
+const { Browser }   = require('./lib/INITS.js');
+const inquirer      = require('inquirer');
 
 (async () => {
-  const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
-  
-  const path = require('path');
-  const proxyFile = path.join(__dirname, 'Proxy-17-06-2025.txt');
-  const proxies = fs.readFileSync(proxyFile, 'utf-8')
-  .split('\n')
-  .map(line => line.trim())
-  .filter(line => line.length > 0);
-  const browser = await chromium.launch({ headless: false });
-  const context = await browser.newContext({
-    userAgent,
-    locale: 'en-US',
-    viewport: { width: 1280, height: 800 },
-    storageState: 'linkedin_state.json'
-  });
-  await context.addInitScript(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-    window.navigator.chrome = { runtime: {} };
-    Object.defineProperty(navigator, 'languages', { get: () => ['en-US', 'en'] });
-    Object.defineProperty(navigator, 'plugins', { get: () => [1, 2, 3, 4, 5] });
-  });
 
-  const page = await context.newPage();
+  const answer = await inquirer.prompt({
+    type: 'list',
+    name: 'action',
+    message: 'Choose an action:',
+    choices: [
+      { name: 'Search for jobs', value: 'search' },
+      { name: 'View job details', value: 'view' },
+      { name: 'Apply for a job', value: 'apply' },
+      { name: 'Exit', value: 'exit' }
+    ],
+    default: 'search'
+  });
+  
+  const browser = new Browser();
+  const human   = new User();
+  const context = await browser.init();
+
+  const page    = await context.newPage();
   await page.goto('https://www.linkedin.com/jobs');
 
   const SELECTORS = {
