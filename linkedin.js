@@ -1,24 +1,9 @@
 const { User }      = require('./lib/USER_INTERACTIONS.js');
 const { Browser }   = require('./lib/INITS.js');
-const inquirer      = require('inquirer');
 
 (async () => {
 
-  const answer = await inquirer.prompt({
-    type: 'list',
-    name: 'action',
-    message: 'Choose an action:',
-    choices: [
-      { name: 'Search for jobs', value: 'search' },
-      { name: 'View job details', value: 'view' },
-      { name: 'Apply for a job', value: 'apply' },
-      { name: 'Exit', value: 'exit' }
-    ],
-    default: 'search'
-  });
-  
-  const browser = new Browser();
-  const human   = new User();
+  const user   = new User();
   const context = await browser.init();
 
   const page    = await context.newPage();
@@ -45,33 +30,33 @@ const inquirer      = require('inquirer');
     }
 
   try {
-    await randomHumanAct(page);
+    await user.randomAct(page);
     await page.waitForSelector(SELECTORS.searchInput, { timeout: 5000 });
-    await humanClick(page, SELECTORS.searchInput);
-    await advancedHumanType(page, SELECTORS.searchInput, 'Programmer', 'normal');
+    await user.click(page, SELECTORS.searchInput);
+    await user.type(page, SELECTORS.searchInput, 'Programmer');
     await page.keyboard.press('Enter');
   } catch {
     console.log('Search input not found');
   }
 
   try {
-    await randomHumanAct(page);
-    await humanClick(page, SELECTORS.filter_date);
+    await user.randomAct(page);
+    await user.click(page, SELECTORS.filter_date);
     await page.waitForTimeout(1000);
-    await humanClick(page, SELECTORS.filter_date_past24h);
+    await user.click(page, SELECTORS.filter_date_past24h);
   } catch {
     console.log('Date filter not found');
   }
   try {
-    await randomHumanAct(page);
-    await humanClick(page, SELECTORS.filter_experience);
+    await user.randomAct(page);
+    await user.click(page, SELECTORS.filter_experience);
     await page.waitForTimeout(1000);
-    await humanClick(page, SELECTORS.filter_experience_intership);
+    await user.click(page, SELECTORS.filter_experience_intership);
   } catch {
     console.log('Experience filter not found');
   }
 
-  await randomHumanAct(page);
+  await user.randomAct(page);
   await page.waitForTimeout(5000)
   await context.storageState({ path: 'linkedin_state.json' });
   await browser.close();
