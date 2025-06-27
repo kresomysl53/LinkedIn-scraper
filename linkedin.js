@@ -99,6 +99,7 @@ async function start(){
     filter_experience_executive:  'input[id="experience-6"]',
     }
 
+  // example of how to use the selectors
   try {
     await user.randomAct(page);
     await page.waitForSelector(SELECTORS.searchInput, { timeout: 5000 });
@@ -128,6 +129,5 @@ async function start(){
 
   await user.randomAct(page);
   await page.waitForTimeout(5000)
-  await context.storageState({ path: 'linkedin_state.json' });
   await browser.close();
 })();
