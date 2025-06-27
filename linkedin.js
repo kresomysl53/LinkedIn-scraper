@@ -1,7 +1,77 @@
 const { User }      = require('./lib/USER_INTERACTIONS.js');
 const { Browser }   = require('./lib/INITS.js');
+const inquirer      = require('inquirer');
+
+async function start(){
+  const answers = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'proxy_rotation',
+      message: 'Do you want to use proxy rotation?',
+      default: false
+    },
+    {
+      type: 'input',
+      name: 'config_file',
+      message: 'Enter the path to your configuration file (press enter for default: config.json):',
+      default: 'config.json',
+    },
+    {
+      type: 'list',
+      name: 'action',
+      message: 'Choose an action:',
+      choices: [
+        { name: 'Search for jobs',      value: 'jobs' },
+        { name: 'Search for people',    value: 'people' },
+        { name: 'Search for companies', value: 'companies' },
+        { name: 'Search for groups',    value: 'groups' },
+        { name: 'Search for posts',     value: 'posts' },
+        { name: 'Search for events',    value: 'events' },
+        { name: 'Search for courses',   value: 'courses' },
+        { name: 'Exit',                 value: 'exit' }
+      ],
+      default: 'jobs'
+    }
+  ]);
+  return answers;
+}
 
 (async () => {
+
+  const answers = await start();
+  console.log('Selected options:', answers);
+  const browser = new Browser(answers.proxy_rotation, 'config.json');
+
+
+  switch (answers.action) {
+    case 'jobs':
+      console.log('Starting job search...');
+      break;
+    case 'people':
+      console.log('Starting people search...');
+      break;
+    case 'companies':
+      console.log('Starting company search...');
+      break;
+    case 'groups':
+      console.log('Starting group search...');
+      break;
+    case 'posts':
+      console.log('Starting post search...');
+      break;
+    case 'events':
+      console.log('Starting event search...');
+      break;
+    case 'courses':
+      console.log('Starting course search...');
+      break;
+    case 'exit':
+      console.log('Exiting...');
+      return;
+    default:
+      console.log('Invalid action selected.');
+      return;
+  }
 
   const user   = new User();
   const context = await browser.init();
