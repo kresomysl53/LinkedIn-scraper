@@ -42,7 +42,6 @@ async function start(){
   console.log('Selected options:', answers);
   const browser = new Browser(answers.proxy_rotation, 'config.json');
 
-
   switch (answers.action) {
     case 'jobs':
       console.log('Starting job search...');
@@ -99,7 +98,6 @@ async function start(){
     filter_experience_executive:  'input[id="experience-6"]',
     }
 
-  // example of how to use the selectors
   try {
     await user.randomAct(page);
     await page.waitForSelector(SELECTORS.searchInput, { timeout: 5000 });
