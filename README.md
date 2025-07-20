@@ -41,10 +41,3 @@ By using this tool, you acknowledge that:
 - **The author assumes no liability** for damages or legal issues resulting from improper or unauthorized use.
 
 Always respect platforms, people, and data boundaries. If you're unsure, **don’t run it**.
-
-## TODO
-- [ ] Finalize selectors for advanced job offer filtering
-
----
-
-*Built with Playwright • Optimized for Stealth • Built on Earth, by Earth 🌍*
