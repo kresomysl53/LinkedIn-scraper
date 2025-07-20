@@ -1,4 +1,4 @@
-# LinkedIn Scraper
+# Job server Scraper
 
 Playwright-based Node.js script for fast, reliable, and stealthy automation with optional proxy rotation
 
@@ -28,15 +28,19 @@ Playwright-based Node.js script for fast, reliable, and stealthy automation with
    ```bash
    node linkedin.js
    ```
+## Disclaimer & Ethical Use Notice
 
-## Notes on Proxy Usage and Rotation
+> This tool is provided **for educational and research purposes only**.  
+> It is not intended for use in violation of any platform’s Terms of Service, including (but not limited to) automated data collection from websites like LinkedIn.
 
-- Currently, proxy rotation is not implemented — so far, I haven’t been "muted," so I’m playing it safe by using a single proxy and one storage state to minimize the risk of upsetting LinkedIn’s anti-bot mechanisms.
-- For higher speeds or large-scale scraping, proxy rotation would be necessary:  
-- Rotate sessions by creating a new browser session per proxy  
-- Rotate proxies globally across sessions  
-- Managing this would require handling storage state separately for each session.  
-- Use responsibly and comply with LinkedIn’s Terms of Service.
+By using this tool, you acknowledge that:
+
+- You are solely responsible for how you use it.  
+- The author **does not condone scraping private or protected data**.  
+- Any misuse, such as evading access controls, breaching terms, or violating data privacy laws, is entirely at the discretion and risk of the user.  
+- **The author assumes no liability** for damages or legal issues resulting from improper or unauthorized use.
+
+Always respect platforms, people, and data boundaries. If you're unsure, **don’t run it**.
 
 ## TODO
 - [ ] Finalize selectors for advanced job offer filtering
